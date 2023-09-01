@@ -2,37 +2,45 @@ local ps = game:GetService("Players")
 local servernum = math.random(10000,99999)
 local plrname = ps.LocalPlayer.Name
 local plrid = ps.LocalPlayer.Name
-getgenv().WebhookLogsLoadedOmg = false
+local timeTable = os.date("*t", os.time())
+local gameinfo = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+
+_G.WebhookLogsLoadedOmg = false
 
 pcall(function()
-	if getgenv().WebhookLogsLoadedOmg == false then
-		getgenv().WebhookLogsLoadedOmg = true
+	if _G.WebhookLogsLoadedOmg == false then
+		_G.WebhookLogsLoadedOmg = true
 		task.spawn(function()
 			local embed = game:GetService("HttpService"):JSONEncode({
-				['content'] = "",
-				['embeds'] = {{
-					["title"] = "**Logging Started**",
+				["content"] = "",
+				["embeds"] = {
+					["image"] = {["url"] = "https://www.roblox.com/asset-thumbnail/image?assetId="..tostring(game.PlaceId).."&width=768&height=432&format=png"},
+					["title"] = "***Logging Started***",
 					["description"] = "",
 					["type"] = "rich",
-					["color"] = "#ffffff",
+					["color"] = tonumber(0xffffff),
 					["fields"] = {
 						{
-							["name"] = "**Server Number**",
+							["name"] = "**Server Number:**",
 							["value"] = tostring(servernum),
 							["inline"] = true,	
 						},
 						{
-							["name"] = "**Game**",
-							["value"] = tostring(game.Name).." ("..tostring(game.PlaceId)..")",
+							["name"] = "**Game:**",
+							["value"] = tostring(gameinfo.Name).." ("..tostring(game.PlaceId)..")",
 							["inline"] = true,	
 						},
 						{
-							["name"] = "**Player**",
+							["name"] = "**Player:**",
 							["value"] = tostring(plrname).." ("..tostring(plrid)..")",
 							["inline"] = true,
 						},
 					},
-				},
+					["timestamp"] = tostring(timeTable.hour..":"..timeTable.min),
+					["footer"] = {
+						["text"] = "Made by TheEGod",
+						["icon_url"] = "",
+					},
 				},
 			})
 			request({
@@ -45,30 +53,35 @@ pcall(function()
 
 		ps.PlayerAdded:Connect(function(p)
 			local embed = game:GetService("HttpService"):JSONEncode({
-				['content'] = "",
-				['embeds'] = {{
-					["title"] = "**Player Joined**",
+				["content"] = "",
+				["embeds"] = {
+					["image"] = {["url"] = "https://www.roblox.com/asset-thumbnail/image?assetId="..tostring(game.PlaceId).."&width=768&height=432&format=png"},
+					["title"] = "***Player Joined***",
 					["description"] = "",
 					["type"] = "rich",
-					["color"] = "#00ff00",
+					["color"] = tonumber(0x00ff00),
 					["fields"] = {
 						{
-							["name"] = "**Server Number**",
+							["name"] = "**Server Number:**",
 							["value"] = tostring(servernum),
 							["inline"] = true,	
 						},
 						{
-							["name"] = "**Game**",
-							["value"] = tostring(game.Name).." ("..tostring(game.PlaceId)..")",
+							["name"] = "**Game:**",
+							["value"] = tostring(gameinfo.Name).." ("..tostring(game.PlaceId)..")",
 							["inline"] = true,	
 						},
 						{
-							["name"] = "**Player**",
+							["name"] = "**Player:**",
 							["value"] = tostring(p.Name).." ("..tostring(p.UserId)..")",
 							["inline"] = true,	
 						},
 					},
-				},
+					["timestamp"] = tostring(timeTable.hour..":"..timeTable.min),
+					["footer"] = {
+						["text"] = "Made by TheEGod",
+						["icon_url"] = "",
+					},
 				},
 			})
 			request({
@@ -81,35 +94,40 @@ pcall(function()
 			task.spawn(function()
 				p.Chatted:Connect(function(chat)
 					local embed2 = game:GetService("HttpService"):JSONEncode({
-						['content'] = "",
-						['embeds'] = {{
-							["title"] = "**Player Chatted**",
+						["content"] = "",
+						["embeds"] = {
+							["image"] = {["url"] = "https://www.roblox.com/asset-thumbnail/image?assetId="..tostring(game.PlaceId).."&width=768&height=432&format=png"},
+							["title"] = "***Player Chatted***",
 							["description"] = "",
 							["type"] = "rich",
-							["color"] = "#ffffff",
+							["color"] = tonumber(0x0000ff),
 							["fields"] = {
 								{
-									["name"] = "**Server Number**",
+									["name"] = "**Server Number:**",
 									["value"] = tostring(servernum),
 									["inline"] = true,	
 								},
 								{
-									["name"] = "**Game**",
-									["value"] = tostring(game.Name).." ("..tostring(game.PlaceId)..")",
+									["name"] = "**Game:**",
+									["value"] = tostring(gameinfo.Name).." ("..tostring(game.PlaceId)..")",
 									["inline"] = true,	
 								},
 								{
-									["name"] = "**Player**",
+									["name"] = "**Player:**",
 									["value"] = tostring(p.Name).." ("..tostring(p.UserId)..")",
 									["inline"] = true,	
 								},
 								{
-									["name"] = "**Message**",
+									["name"] = "**Message:**",
 									["value"] = tostring(chat),
 									["inline"] = true,	
 								},
 							},
-						},
+							["timestamp"] = tostring(timeTable.hour..":"..timeTable.min..":"..timeTable.sec),
+							["footer"] = {
+								["text"] = "Made by TheEGod",
+								["icon_url"] = "",
+							},
 						},
 					})
 					request({
@@ -124,12 +142,13 @@ pcall(function()
 
 		ps.PlayerRemoving:Connect(function(p)
 			local embed = game:GetService("HttpService"):JSONEncode({
-				['content'] = "",
-				['embeds'] = {{
+				["content"] = "",
+				["embeds"] = {
+					["image"] = {["url"] = "https://www.roblox.com/asset-thumbnail/image?assetId="..tostring(game.PlaceId).."&width=768&height=432&format=png"},
 					["title"] = "**Player Left**",
 					["description"] = "",
 					["type"] = "rich",
-					["color"] = "#00ff00",
+					["color"] = tonumber(0xff0000),
 					["fields"] = {
 						{
 							["name"] = "**Server Number**",
@@ -138,7 +157,7 @@ pcall(function()
 						},
 						{
 							["name"] = "**Game**",
-							["value"] = tostring(game.Name).." ("..tostring(game.PlaceId)..")",
+							["value"] = tostring(gameinfo.Name).." ("..tostring(game.PlaceId)..")",
 							["inline"] = true,	
 						},
 						{
@@ -147,7 +166,11 @@ pcall(function()
 							["inline"] = true,	
 						},
 					},
-				},
+					["timestamp"] = tostring(timeTable.hour..":"..timeTable.min),
+					["footer"] = {
+						["text"] = "Made by TheEGod",
+						["icon_url"] = "",
+					},
 				},
 			})
 			request({
@@ -159,14 +182,13 @@ pcall(function()
 			
 			task.spawn(function()
 				if p.Name == plrname and p.UserId == plrid then
-          getgenv().WebhookLogsLoadedOmg == false
 					local embed = game:GetService("HttpService"):JSONEncode({
-						['content'] = "",
-						['embeds'] = {{
+						["content"] = "",
+						["embeds"] = {
 							["title"] = "**Logging Ended**",
-							["description"] = "Player who executed logger is gone.",
+							["description"] = "Player who executed game logger left.",
 							["type"] = "rich",
-							["color"] = "#ffffff",
+							["color"] = tonumber(0x000000),
 							["fields"] = {
 								{
 									["name"] = "**Server Number**",
@@ -174,7 +196,11 @@ pcall(function()
 									["inline"] = true,	
 								},
 							},
-						},
+							["timestamp"] = tostring(timeTable.hour..":"..timeTable.min),
+							["footer"] = {
+								["text"] = "Made by TheEGod",
+								["icon_url"] = "",
+							},
 						},
 					})
 					request({
@@ -189,22 +215,25 @@ pcall(function()
 
 		task.spawn(function()
 			if #ps:GetPlayers() <= 0 then
-        getgenv().WebhookLogsLoadedOmg == false
 				local embed2 = game:GetService("HttpService"):JSONEncode({
-					['content'] = "",
-					['embeds'] = {{
-						["title"] = "**Server Gone**",
+					["content"] = "",
+					["embeds"] = {
+						["title"] = "***Server Gone***",
 						["description"] = "The server has been shut down.",
 						["type"] = "rich",
-						["color"] = "#ffffff",
+						["color"] = tonumber(0x000000),
 						["fields"] = {
 							{
-								["name"] = "**Server Number**",
+								["name"] = "**Server Number:**",
 								["value"] = tostring(servernum),
 								["inline"] = true,	
 							},
 						},
-					},
+						["timestamp"] = tostring(timeTable.hour..":"..timeTable.min),
+						["footer"] = {
+							["text"] = "Made by TheEGod",
+							["icon_url"] = "",
+						},
 					},
 				})
 				request({
@@ -220,35 +249,40 @@ pcall(function()
 			for _, p in pairs(ps:GetPlayers()) do
 				p.Chatted:Connect(function(chat)
 					local embed = game:GetService("HttpService"):JSONEncode({
-						['content'] = "",
-						['embeds'] = {{
-							["title"] = "**Player Chatted**",
+						["content"] = "",
+						["embeds"] = {
+							["image"] = {["url"] = "https://www.roblox.com/asset-thumbnail/image?assetId="..tostring(game.PlaceId).."&width=768&height=432&format=png"},
+							["title"] = "***Player Chatted***",
 							["description"] = "",
 							["type"] = "rich",
-							["color"] = "#ffffff",
+							["color"] = tonumber(0x0000ff),
 							["fields"] = {
 								{
-									["name"] = "**Server Number**",
+									["name"] = "**Server Number:**",
 									["value"] = tostring(servernum),
 									["inline"] = true,	
 								},
 								{
-									["name"] = "**Game**",
-									["value"] = tostring(game.Name).." ("..tostring(game.PlaceId)..")",
+									["name"] = "**Game:**",
+									["value"] = tostring(gameinfo.Name).." ("..tostring(game.PlaceId)..")",
 									["inline"] = true,	
 								},
 								{
-									["name"] = "**Player**",
+									["name"] = "**Player:**",
 									["value"] = tostring(p.Name).." ("..tostring(p.UserId)..")",
 									["inline"] = true,	
 								},
 								{
-									["name"] = "**Message**",
+									["name"] = "**Message:**",
 									["value"] = tostring(chat),
 									["inline"] = true,	
 								},
 							},
-						},
+							["timestamp"] = tostring(timeTable.hour..":"..timeTable.min),
+							["footer"] = {
+								["text"] = "Made by TheEGod",
+								["icon_url"] = "",
+							},
 						},
 					})
 					request({
